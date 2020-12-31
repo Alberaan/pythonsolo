@@ -1,0 +1,36 @@
+{
+"Perfil":{
+  "Nombre": "",
+  "Especie": "",
+  "Benis": 3,
+  "Convicción": ""
+},
+"Atributos":{
+  "Agilidad": "1d4",
+  "Astucia": "1d4",
+  "Espíritu": "1d4",
+  "Fuerza": "1d4",
+  "Vigor": "1d4"
+},
+"Atributos Derivados":{
+  "Paso": 12,
+  "Parada": 4,
+  "Dureza": 3,
+  "Tamaño": 1
+},
+"Salud":{
+  "Heridas": 10,
+  "INC": 4,
+  "Fatiga": 1
+},
+"Poderes":{
+},
+"Armas":{
+},
+"Equipo":{
+},
+"Desventajas":{
+},
+"Ventajas & Avances":{
+}
+}

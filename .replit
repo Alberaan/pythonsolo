@@ -1,0 +1,3 @@
+language="python3"
+run="pip install dice; python -i -c 'from solotables import *'"
+onBoot="pip install dice; python -i -c 'from solotables import *'"

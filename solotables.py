@@ -48,7 +48,19 @@ def lt(filterstring=""):
 
 def rtn(tableNumber):
     tables = getTables(tablesPath)
-    table = tables[tableNumber]
+
+    validNumber= re.search("\d+", str(tableNumber))
+
+    if not validNumber or int(tableNumber) < 0:
+        print("Número no válido")
+        return
+
+    if int(tableNumber) >= len(tables):
+        print("No hay ninguna tabla con ese número")
+        return
+
+
+    table = tables[int(tableNumber)]
     
     print(rt(table[1], table[2]))
     print("")
@@ -97,10 +109,10 @@ def r(string):
     print(results)
     print("\nMinimum=" + str(minimum) + ", Maximum=" + str(maximum) + ", total=" + str(total))
 
-def help():
-    print("Available commands:\n")
-    print("rt(system,filename): rolls in a random table of the specified system")
-    print("lt([filter]): lists all tables included. If filter is specified, it will only show tables/system that include the filter.")
-    print("rtn(number): rolls in the random table with the index number. This number can be found when listing tables or searching tables.")
-    print("rts(searchname): searches for tables containing the searchname parameter. If there is only one table found, it will roll on it.")
+def ayuda():
+    print("Comandos disponibles:\n")
+    print("lt([\"filtro\"]): lista todas las tablas. Si se especifica un filtro, solo se mostrarán aquellas tablas/sistemas cuyo nombre contenga el filtro especificado. Ejemplo: lt() mostrará todo. lt(\"tarot\") muestra todas las tablas o sistemas que contengan la palabra tarot")
+    print("rtn(número): obtén un elemento aleatorio de la tabla con el número especificado. Este número puede consultarse cuando se listan o buscan tablas. Ejemplo rtn(1)")
+    print("rts(\"nombre\"): busca el nombre de la tabla o sistemas. Si solo hay una tabla con que contenga ese nombre, elegirá un elemento de ella. Ejemplo: rts(\"carta\")")
+    print("r(\"XdY\"): lanza X dados de Y caras cada uno. Ejemplo: r(\"2d6\")")
     print("")

@@ -4,6 +4,8 @@ import random
 import re
 import os
 from dice import roll
+import sys
+import inspect
 
 tablesPath = "./Tablas"
 
@@ -38,6 +40,7 @@ def getTables(path=tablesPath):
 
     return tablesToReturn
 
+#lt [filtro]: lista todas las tablas. Si se especifica un filtro, solo se mostrarán aquellas tablas/sistemas cuyo nombre contenga el filtro especificado. Ejemplo: "lt" mostrará todas las tablas. "lt tarot" muestra todas las tablas o sistemas que contengan la palabra tarot
 def lt(filterstring=""):
     tables = getTables(tablesPath)
     for table in tables:
@@ -46,6 +49,7 @@ def lt(filterstring=""):
 
     print("")
 
+#rtn número: obtén un elemento aleatorio de la tabla con el número especificado. Este número puede consultarse cuando se listan o buscan tablas. Ejemplo "rtn 1" hará una tirada en la tabla 1
 def rtn(tableNumber):
     tables = getTables(tablesPath)
 
@@ -65,6 +69,7 @@ def rtn(tableNumber):
     print(rt(table[1], table[2]))
     print("")
 
+#rts nombre: busca el nombre de la tabla o sistemas. Si solo hay una tabla con que contenga ese nombre, elegirá un elemento de ella. Ejemplo: "rts carta"
 def rts(searchString):
     tables = getTables(tablesPath)
 
@@ -84,6 +89,7 @@ def rts(searchString):
         print("Table found: " + matches[0][2])
         print(rt(matches[0][1],matches[0][2] + ".txt"))
 
+#r XdY: lanza X dados de Y caras cada uno. Ejemplo: "r 2d6" lanzará 2 dados de 6 caras
 def r(string):
     results = roll(string)
     minimum = None
@@ -109,10 +115,33 @@ def r(string):
     print(results)
     print("\nMinimum=" + str(minimum) + ", Maximum=" + str(maximum) + ", total=" + str(total))
 
+#ayuda: Imprime esta ayuda
 def ayuda():
     print("Comandos disponibles:\n")
-    print("lt([\"filtro\"]): lista todas las tablas. Si se especifica un filtro, solo se mostrarán aquellas tablas/sistemas cuyo nombre contenga el filtro especificado. Ejemplo: lt() mostrará todo. lt(\"tarot\") muestra todas las tablas o sistemas que contengan la palabra tarot")
-    print("rtn(número): obtén un elemento aleatorio de la tabla con el número especificado. Este número puede consultarse cuando se listan o buscan tablas. Ejemplo rtn(1)")
-    print("rts(\"nombre\"): busca el nombre de la tabla o sistemas. Si solo hay una tabla con que contenga ese nombre, elegirá un elemento de ella. Ejemplo: rts(\"carta\")")
-    print("r(\"XdY\"): lanza X dados de Y caras cada uno. Ejemplo: r(\"2d6\")")
+    thismodule = sys.modules[__name__]
+    funcionesModulo= inspect.getmembers(thismodule, inspect.isfunction)
+
+    for funcion in funcionesModulo:
+        ayuda = inspect.getcomments(funcion[1])
+        if ayuda != None:
+            print("-" + ayuda.replace("#", "").replace("\n",""))
     print("")
+
+def llamadaDinamica(llamada):
+    thismodule = sys.modules[__name__]
+    funcionesModulo= inspect.getmembers(thismodule, inspect.isfunction)
+    funcion = llamada.split(" ")[0]
+    parametros = llamada.split(" ")[1:]
+    if funcion in [x[0] for x in funcionesModulo]:
+        funcionALlamar = getattr(thismodule, funcion)(*parametros)
+
+def main():
+    print("Bienvenido al programa de tablas aleatorias")
+    ayuda()
+    while(1):
+        print("Qué quieres hacer?:")
+        aLlamar = input()
+        llamadaDinamica(aLlamar)
+
+if __name__ == main():
+    main()

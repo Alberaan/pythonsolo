@@ -19,7 +19,7 @@ def rt(system, filename):
 
     table = tablesPath + "/" + system + "/" + table + ".txt"
 
-    with open(table, encoding="utf-8") as f:
+    with open(table, encoding="utf-8", errors="ignore") as f:
         elements = [line.rstrip() for line in f]
 
 
@@ -133,7 +133,14 @@ def llamadaDinamica(llamada):
     funcion = llamada.split(" ")[0]
     parametros = llamada.split(" ")[1:]
     if funcion in [x[0] for x in funcionesModulo]:
-        funcionALlamar = getattr(thismodule, funcion)(*parametros)
+        try:
+            funcionALlamar = getattr(thismodule, funcion)(*parametros)
+        except TypeError:
+            print("Orden incorrecta. Por favor, consulta la ayuda:")
+            ayuda()
+    else:
+        print("Orden no encontrada. Por favor, consulta la ayuda:")
+        ayuda()
 
 def main():
     print("Bienvenido al programa de tablas aleatorias")

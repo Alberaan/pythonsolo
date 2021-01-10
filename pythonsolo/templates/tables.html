@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<ul>
+{% for table in tables %}
+    <a href="{% url 'tables' %}?roll={{ table.0 }}">
+        <li>({{ table.1 }}) {{ table.2 }}</li>
+    </a>
+{% endfor %}
+</ul>
+</body>
+</html>

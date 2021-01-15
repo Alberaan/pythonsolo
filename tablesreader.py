@@ -7,7 +7,7 @@ from dice import roll
 import sys
 import inspect
 
-tablesPath = "./Tablas"
+tables_path = "./Tablas"
 
 class Response:
     def __init__(self, message="", data=None):
@@ -23,32 +23,32 @@ class Table:
 def rt(chosen_table):
 
     table_name = chosen_table.filename.replace(".txt", "")
-    validstring = re.search(r"^[a-zA-Z_\s]*$", table_name)
+    valid_string = re.search(r"^[a-zA-Z_\s]*$", table_name)
 
-    if not validstring:
+    if not valid_string:
         return Response(message="Invalid string", data=None)
 
-    table_path= tablesPath + "/" + chosen_table.system + "/" + table_name + ".txt"
+    table_path= tables_path + "/" + chosen_table.system + "/" + table_name + ".txt"
 
     with open(table_path, encoding="utf-8", errors="ignore") as f:
         elements = [line.rstrip() for line in f]
 
     return Response(message="Result:", data=random.choice(elements))
 
-def getTables(path=tablesPath):
+def get_tables(path=tables_path):
     directories = os.listdir(path)
     cont = 0
 
-    tablesToReturn = []
+    tables_to_return = []
 
     for directory in directories:
         tables = os.listdir(path + "/" + directory)
         for table in tables:
             if ".txt" in table:
-                tablesToReturn.append(Table(cont, directory.split("/")[-1], table.replace(".txt", "")))
-                cont +=1
+                tables_to_return.append(Table(cont, directory.split("/")[-1], table.replace(".txt", "")))
+                cont += 1
 
-    return tablesToReturn
+    return tables_to_return
 
 #lt [filtro]: lista todas las tablas. Si se especifica un filtro, solo se mostrarán aquellas tablas/sistemas cuyo nombre contenga el filtro especificado. Ejemplo: "lt" mostrará todas las tablas. "lt tarot" muestra todas las tablas o sistemas que contengan la palabra tarot
 def lt(tables, filterstring=""):
@@ -61,24 +61,24 @@ def lt(tables, filterstring=""):
     return Response(message="", data=tables_to_return)
 
 #rtn número: obtén un elemento aleatorio de la tabla con el número especificado. Este número puede consultarse cuando se listan o buscan tablas. Ejemplo "rtn 1" hará una tirada en la tabla 1
-def rtn(tables, tableNumber):
+def rtn(tables, table_number):
 
-    validNumber = re.search(r"\d+", str(tableNumber))
+    valid_number = re.search(r"\d+", str(table_number))
 
-    if not validNumber or int(tableNumber) < 0:
+    if not valid_number or int(table_number) < 0:
         return Response(message="Número no válido", data=None)
 
-    if int(tableNumber) >= len(tables):
+    if int(table_number) >= len(tables):
         return Response(message="No hay ninguna tabla con ese número", data=None)
 
-    table = tables[int(tableNumber)]
+    table = tables[int(table_number)]
     
     return rt(table)
 
 #rts nombre: busca el nombre de la tabla o sistemas. Si solo hay una tabla con que contenga ese nombre, elegirá un elemento de ella. Ejemplo: "rts carta"
-def rts(tables, searchString):
+def rts(tables, search_string):
 
-    matches = [s for s in tables if searchString.lower() in s.filename.lower()]
+    matches = [s for s in tables if search_string.lower() in s.filename.lower()]
 
     if len(matches) == 0:
         return Response(message="No tables found", data=None)
@@ -121,18 +121,18 @@ def r(tables, string):
 #ayuda: Imprime esta ayuda
 def ayuda():
     print("Comandos disponibles:\n")
-    thismodule = sys.modules[__name__]
-    funcionesModulo= inspect.getmembers(thismodule, inspect.isfunction)
+    this_module = sys.modules[__name__]
+    module_functions= inspect.getmembers(this_module, inspect.isfunction)
 
     text = ""
-    for funcion in funcionesModulo:
+    for funcion in module_functions:
         ayuda = inspect.getcomments(funcion[1])
         if ayuda != None:
             text += "-" + ayuda.replace("#", "")
 
     return Response(message="", data=text)
 
-def allowedFunction(my_function):
+def allowed_function(my_function):
     allowed = inspect.getcomments(my_function) 
     
     if allowed != None:
@@ -140,21 +140,21 @@ def allowedFunction(my_function):
 
     return False
 
-def llamadaDinamica(tables, llamada):
-    thismodule = sys.modules[__name__]
-    funcionesModulo = inspect.getmembers(thismodule, inspect.isfunction)
-    funcion = llamada.split(" ")[0]
-    parametros = llamada.split(" ")[1:]
-    parametros.insert(0, tables)
+def dynamic_call(tables, call):
+    this_module = sys.modules[__name__]
+    module_functions = inspect.getmembers(this_module, inspect.isfunction)
+    function = call.split(" ")[0]
+    parameters = call.split(" ")[1:]
+    parameters.insert(0, tables)
 
-    if funcion in [x[0] for x in funcionesModulo]:
+    if function in [x[0] for x in module_functions]:
         try:
-            to_be_executed = getattr(thismodule, funcion)
+            to_be_executed = getattr(this_module, function)
 
-            if not allowedFunction(to_be_executed):
+            if not allowed_function(to_be_executed):
                 raise TypeError
 
-            return to_be_executed(*parametros)
+            return to_be_executed(*parameters)
 
         except TypeError:
             response = ayuda()

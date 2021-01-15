@@ -13,12 +13,12 @@ def print_data(data):
 
 def main():
     print("Bienvenido al programa de tablas aleatorias")
-    tables = getTables()
+    tables = get_tables()
     print(ayuda().data)
     while(1):
         print("Qué quieres hacer?:")
-        aLlamar = input()
-        datos = llamadaDinamica(tables, aLlamar)
+        command = input()
+        datos = dynamic_call(tables, command)
         print(datos.message)
         print_data(datos.data)
 

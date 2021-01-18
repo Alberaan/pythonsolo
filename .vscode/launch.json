@@ -5,7 +5,7 @@
     "version": "0.2.0",
     "configurations": [
          {
-            "name": "Python: current file",
+            "name": "Python: console",
             "type": "python",
             "request": "launch",
             "program": "consoleapp.py",
@@ -13,12 +13,12 @@
             "args" : ["-i"]
         },
         {
-            "name": "Python dbtropesTableCreator: interactive",
+            "name": "Python: current file",
             "type": "python",
             "request": "launch",
             "program": "${file}",
             "console": "integratedTerminal",
-            "args" : ["-i"]
+            "args" : [""]
         }
     ]
 }

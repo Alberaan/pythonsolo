@@ -22,6 +22,8 @@ def fixTitle(title):
     return titleToReturn
 
 def getTropes(url):
+    tvtropes_link = url
+    url ='http://dbtropes.org/info?uri=' + tvtropes_link + "&submit=Reverse+URI+Lookup"
     page = requests.get(url)
     soup = BeautifulSoup(page.text, "html.parser")
     unfilteredTitle = soup.select("head title")[0].get_text().replace(" - DBTropes","")
@@ -43,7 +45,7 @@ def getTropes(url):
 def main():
     if (sys.argv[1] == "-i"):
         while(1):
-            url = input("Introduce la url de dbtropes.org a partir de la cual quieras crear una tabla aleatoria:\n")
+            url = input("Introduce la url de tvtropes.org a partir de la cual quieras crear una tabla aleatoria:\n")
             title, text = getTropes(url)
             print("Tabla para: " + title + "\n")
             print(text)

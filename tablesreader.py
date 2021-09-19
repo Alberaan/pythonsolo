@@ -6,8 +6,9 @@ import os
 from dice import roll, DiceException
 import sys
 import inspect
+import pathlib
 
-tables_path = "Tablas"
+tables_path = str(pathlib.Path(__file__).parent.resolve()) + "\Tablas"
 
 class Response:
     def __init__(self, message="", data=None):

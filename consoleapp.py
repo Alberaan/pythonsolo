@@ -13,6 +13,13 @@ def print_data(data):
 
 def main():
     tables = get_tables()
+    if "ESPANSO_FORM1_NAME" in os.environ and len(os.environ['ESPANSO_FORM1_NAME']) > 0:
+        command = os.environ['ESPANSO_FORM1_NAME']
+        datos = dynamic_call(tables, command)
+        print(datos.message)
+        print_data(datos.data)
+        return
+
     if len(sys.argv) > 1:
         command = ' '.join(sys.argv[1:])
         datos = dynamic_call(tables, command)

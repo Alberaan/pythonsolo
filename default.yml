@@ -1,0 +1,46 @@
+# espanso configuration file. It should be installed in [PATH TO USER]\AppData\Roaming\espanso if in windows
+
+# This is the default configuration file, change it as you like it
+# You can refer to the official documentation:
+# https://espanso.org/docs/
+
+# Matches are the substitution rules, when you type the "trigger" string
+# it gets replaced by the "replace" string.
+matches:
+  # Simple text replacement
+  - trigger: ":espanso"
+    replace: "Hi there!"
+
+  # Dates
+  - trigger: ":date"
+    replace: "{{mydate}}"
+    vars:
+      - name: mydate
+        type: date
+        params:
+          format: "%m/%d/%Y"
+
+  # Shell commands
+  - trigger: ":shell"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: shell
+        params:
+          cmd: "echo Hello from your shell"
+
+  # Test script + form
+  - trigger: ":pysolo"
+    replace: "{{script}}"
+    vars:
+    - name: form1
+      type: form
+      params:
+        layout: |
+          Comando {{name}}
+    - name: script
+      type: script
+      params:
+       args:
+         - [PATH to USER]\.virtualenvs\pythonsolo-AG7ctEHX\Scripts\python.exe
+         - [PATH to USER]\Documents\Python\pythonsolo\consoleapp.py

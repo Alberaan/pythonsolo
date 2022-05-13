@@ -163,6 +163,10 @@ def ayuda(*argv):
 
     return Response(message="", data=text)
 
+#q: salir
+def q(*argv):
+    quit()
+
 def allowed_function(my_function):
     allowed = inspect.getcomments(my_function) 
     

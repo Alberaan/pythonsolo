@@ -9,7 +9,7 @@ import inspect
 import pathlib
 
 if 'ANDROID_BOOTLOGO' in os.environ:
-    tables_path = str(pathlib.Path(__file__).parent.resolve()) + "Tablas"
+    tables_path = str(pathlib.Path(__file__).parent.resolve()) + "/Tablas"
 else:
     tables_path = str(pathlib.Path(__file__).parent.resolve()) + "\Tablas"
 

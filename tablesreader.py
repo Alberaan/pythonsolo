@@ -7,9 +7,8 @@ from dice import roll, DiceException
 import sys
 import inspect
 import pathlib
-import subprocess
 
-if subprocess.check_output(['uname', '-o']).strip() == b'Android':
+if 'ANDROID_BOOTLOGO' in os.environ:
     tables_path = str(pathlib.Path(__file__).parent.resolve()) + "Tablas"
 else:
     tables_path = str(pathlib.Path(__file__).parent.resolve()) + "\Tablas"

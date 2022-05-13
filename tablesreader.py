@@ -7,8 +7,12 @@ from dice import roll, DiceException
 import sys
 import inspect
 import pathlib
+import subprocess
 
-tables_path = str(pathlib.Path(__file__).parent.resolve()) + "\Tablas"
+if subprocess.check_output(['uname', '-o']).strip() == b'Android':
+    tables_path = str(pathlib.Path(__file__).parent.resolve()) + "Tablas"
+else:
+    tables_path = str(pathlib.Path(__file__).parent.resolve()) + "\Tablas"
 
 class Response:
     def __init__(self, message="", data=None):

@@ -21,7 +21,11 @@ def rt(table_name):
             elements.append(line)
 
     curatedElements = [x for x in elements if "*" not in x]
-    chosen = random.choice(elements)
+    if len(curatedElements) <= 1:
+        print("No quedan elementos en la baraja. Reseteala con -r")
+        quit()
+
+    chosen = random.choice(curatedElements)
 
     index = elements.index(chosen)
     elements[index] = "*" + elements[index] 

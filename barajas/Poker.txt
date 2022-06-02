@@ -1,11 +1,11 @@
 1 de treboles
-2 de treboles
+*2 de treboles
 3 de treboles
 4 de treboles
 5 de treboles
 6 de treboles
 7 de treboles
-8 de treboles
+*8 de treboles
 9 de treboles
 10 de treboles
 J de treboles
@@ -44,8 +44,8 @@ Q de corazones
 6 de diamantes
 7 de diamantes
 8 de diamantes
-9 de diamantes
+*9 de diamantes
 10 de diamantes
-J de diamantes
+**J de diamantes
 Q de diamantes
-K de diamantes
+**K de diamantes
